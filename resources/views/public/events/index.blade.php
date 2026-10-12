@@ -1,5 +1,8 @@
 @extends('layouts.public')
 
+@section('title', 'Events | Philadelphia Gospel Assembly')
+@section('meta_description', 'Upcoming and past events at Philadelphia Gospel Assembly Tanzania.')
+
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
     <div class="text-center mb-12">
@@ -23,7 +26,7 @@
                         @if($event->description)
                             <p class="text-sm text-[#1b1b18] line-clamp-3 mb-4">{{ Str::limit($event->description, 120) }}</p>
                         @endif
-                        <a href="{{ route('events.show', $event->slug) }}" class="text-[#D8B04B] hover:text-[#b8943f] font-medium">Learn More ?</a>
+                        <a href="{{ route('events.show', $event->slug) }}" class="text-[#D8B04B] hover:text-[#b8943f] font-medium">Learn More &rarr;</a>
                     </div>
                 </div>
             @endforeach
@@ -43,7 +46,7 @@
                         @if($event->location)
                             <p class="text-sm text-[#706f6c] mb-3">{{ $event->location }}</p>
                         @endif
-                        <a href="{{ route('events.show', $event->slug) }}" class="text-[#D8B04B] hover:text-[#b8943f] font-medium">View Details ?</a>
+                        <a href="{{ route('events.show', $event->slug) }}" class="text-[#D8B04B] hover:text-[#b8943f] font-medium">View Details &rarr;</a>
                     </div>
                 </div>
             @endforeach

@@ -1,9 +1,12 @@
 @extends('layouts.public')
 
+@section('title', $ministry->name . ' | Ministries | Philadelphia Gospel Assembly')
+@section('meta_description', Str::limit(strip_tags($ministry->description ?? 'A ministry of Philadelphia Gospel Assembly Tanzania.'), 150))
+
 @section('content')
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
     <div class="mb-6">
-        <a href="{{ route('ministries.index') }}" class="text-[#06182D] hover:text-[#D8B04B]">? Back to Ministries</a>
+        <a href="{{ route('ministries.index') }}" class="text-[#06182D] hover:text-[#D8B04B]">&larr; Back to Ministries</a>
     </div>
 
     <article class="bg-white rounded-lg shadow-sm border border-gray-100 p-6 sm:p-8">

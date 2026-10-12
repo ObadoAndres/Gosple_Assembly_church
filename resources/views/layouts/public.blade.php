@@ -4,8 +4,23 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Philadelphia Gospel Assembly') }}</title>
-    <meta name="description" content="Philadelphia Gospel Assembly Tanzania - Knowing God. Growing in Faith. Living His Purpose.">
+    @php
+        $metaTitle = strip_tags($__env->yieldContent('title', config('app.name', 'Philadelphia Gospel Assembly')));
+        $metaDescription = strip_tags($__env->yieldContent('meta_description', 'Philadelphia Gospel Assembly Tanzania - a Pentecostal Christian church proclaiming the Gospel of Jesus Christ in Dodoma and throughout the nations.'));
+    @endphp
+    <title>{{ $metaTitle }}</title>
+    <meta name="description" content="{{ $metaDescription }}">
+
+    <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any">
+    <link rel="apple-touch-icon" href="{{ asset('images/logo.png') }}">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Philadelphia Gospel Assembly">
+    <meta property="og:title" content="{{ $metaTitle }}">
+    <meta property="og:description" content="{{ $metaDescription }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:image" content="{{ asset('images/logo.png') }}">
+    <meta name="twitter:card" content="summary">
 
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
@@ -34,15 +49,35 @@
     @include('components.public.footer')
 
     <script>
-        const menuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        if (menuBtn && mobileMenu) {
+        (function () {
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            if (!menuBtn || !mobileMenu) {
+                return;
+            }
+
+            const setOpen = (open) => {
+                mobileMenu.classList.toggle('hidden', !open);
+                menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+                menuBtn.dataset.open = open ? 'true' : 'false';
+            };
+
             menuBtn.addEventListener('click', () => {
-                const expanded = menuBtn.getAttribute('aria-expanded') === 'true';
-                menuBtn.setAttribute('aria-expanded', !expanded);
-                mobileMenu.classList.toggle('hidden');
+                setOpen(menuBtn.dataset.open !== 'true');
             });
-        }
+
+            mobileMenu.querySelectorAll('a').forEach((link) => {
+                link.addEventListener('click', () => setOpen(false));
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && menuBtn.dataset.open === 'true') {
+                    setOpen(false);
+                    menuBtn.focus();
+                }
+            });
+        })();
     </script>
 </body>
 </html>

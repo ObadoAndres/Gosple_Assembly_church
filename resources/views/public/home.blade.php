@@ -1,16 +1,34 @@
 @extends('layouts.public')
 
+@section('title', 'Philadelphia Gospel Assembly | Dodoma, Tanzania')
+@section('meta_description', 'Philadelphia Gospel Assembly Tanzania - a Pentecostal Christian church in Dodoma proclaiming the Gospel of Jesus Christ and serving communities with the love of Christ.')
+
 @section('content')
-    <section class="relative bg-[#06182D] text-white py-24 sm:py-32 overflow-hidden">
+    <section class="relative bg-[#06182D] text-white py-16 sm:py-24 overflow-hidden">
         <div class="absolute inset-0 bg-gradient-to-br from-[#06182D] via-[#0a1a3a] to-[#06182D] opacity-90"></div>
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center">
-                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 tracking-tight">Philadelphia Gospel Assembly</h1>
-                <p class="text-xl sm:text-2xl mb-4 italic">"Philadelphia tunasonga mbele, Bwana yu pamoja nasi."</p>
-                <p class="text-lg sm:text-xl mb-8">Knowing God. Growing in Faith. Living His Purpose.</p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="{{ route('services') }}" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-[#06182D] bg-[#D8B04B] hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-[#D8B04B] focus:ring-offset-2 focus:ring-offset-[#06182D] transition-colors">Join Us This Sunday</a>
-                    <a href="{{ route('services') }}" class="inline-flex items-center justify-center px-8 py-3 border border-white text-base font-medium rounded-md text-white hover:bg-white hover:text-[#06182D] focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#06182D] transition-colors">Come Worship With Us</a>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+                <div class="text-center lg:text-left">
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 tracking-tight">Philadelphia Gospel Assembly</h1>
+                    <p class="text-xl sm:text-2xl mb-4 italic text-[#D8B04B]">"Philadelphia tunasonga mbele, Bwana yu pamoja nasi."</p>
+                    <p class="text-lg sm:text-xl mb-8 text-gray-200">Knowing God. Growing in Faith. Living His Purpose.</p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="{{ route('contact') }}" class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-[#06182D] bg-[#D8B04B] hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-[#D8B04B] focus:ring-offset-2 focus:ring-offset-[#06182D] transition-colors">Plan Your Visit</a>
+                        <a href="{{ route('about') }}" class="inline-flex items-center justify-center px-8 py-3 border border-white text-base font-medium rounded-md text-white hover:bg-white hover:text-[#06182D] focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-[#06182D] transition-colors">Learn About Us</a>
+                    </div>
+                    <p class="mt-6 text-sm text-gray-300">
+                        <a href="{{ route('sermons.index') }}" class="underline underline-offset-4 hover:text-[#D8B04B] focus:outline-none focus:ring-2 focus:ring-[#D8B04B] rounded">Watch Sermons</a>
+                        <span class="mx-2 text-gray-500" aria-hidden="true">&middot;</span>
+                        <a href="{{ route('events.index') }}" class="underline underline-offset-4 hover:text-[#D8B04B] focus:outline-none focus:ring-2 focus:ring-[#D8B04B] rounded">See Events</a>
+                    </p>
+                </div>
+                <div class="justify-self-center lg:justify-self-end w-full max-w-xs sm:max-w-sm">
+                    <img src="{{ asset('images/Arch%20Bishop%20Prof%20Yohana%20Simon%20Masinga.png') }}"
+                         alt="Arch Bishop Prof. Yohana Simon Masinga, founder and senior leader of Philadelphia Gospel Assembly"
+                         class="w-full rounded-lg shadow-lg border border-white/10 object-cover"
+                         style="aspect-ratio: 455 / 576;"
+                         width="455" height="576" loading="eager">
+                    <p class="mt-3 text-center text-sm text-gray-300">Arch Bishop Prof. Yohana Simon Masinga, Founder &amp; Senior Leader</p>
                 </div>
             </div>
         </div>

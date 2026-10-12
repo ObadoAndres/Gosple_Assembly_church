@@ -2,7 +2,10 @@
     <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-                <h3 class="text-lg font-semibold mb-4">Philadelphia Gospel Assembly</h3>
+                <div class="flex items-center gap-3 mb-4">
+                    <img src="{{ asset('images/logo.png') }}" alt="Philadelphia Gospel Assembly logo" class="h-12 w-12 object-contain bg-white rounded-full p-1" width="360" height="360">
+                    <h3 class="text-lg font-semibold">Philadelphia Gospel Assembly</h3>
+                </div>
                 <p class="text-sm text-gray-300 mb-4">Knowing God. Growing in Faith. Living His Purpose.</p>
                 <p class="text-sm text-gray-300">Motto: <em>Philadelphia tunasonga mbele, Bwana yu pamoja nasi.</em></p>
             </div>

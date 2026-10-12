@@ -33,7 +33,11 @@ class Sermon extends Model
 
     public function scopePublished($query)
     {
-        return $query->where('is_published', true);
+        return $query->where('is_published', true)
+            ->where(function ($q) {
+                $q->whereNull('published_at')
+                    ->orWhere('published_at', '<=', now());
+            });
     }
 
     public static function generateUniqueSlug(string $title): string

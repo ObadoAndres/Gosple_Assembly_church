@@ -63,4 +63,31 @@ class AnnouncementManagementTest extends TestCase
         Announcement::create(['title' => 'Future', 'slug' => 'future', 'body' => 'b', 'is_published' => true, 'published_at' => now()->addHour()]);
         $this->assertEquals(1, Announcement::published()->count());
     }
+
+    public function test_scheduled_announcements_are_not_public(): void
+    {
+        $scheduled = Announcement::create([
+            'title' => 'Scheduled',
+            'slug' => 'scheduled',
+            'body' => 'b',
+            'is_published' => true,
+            'published_at' => now()->addDay(),
+        ]);
+
+        $this->assertNull(Announcement::published()->find($scheduled->id));
+    }
+
+    public function test_expired_announcements_are_not_public(): void
+    {
+        $expired = Announcement::create([
+            'title' => 'Expired',
+            'slug' => 'expired-explicit',
+            'body' => 'b',
+            'is_published' => true,
+            'published_at' => now()->subDay(),
+            'expires_at' => now()->subHour(),
+        ]);
+
+        $this->assertNull(Announcement::published()->find($expired->id));
+    }
 }

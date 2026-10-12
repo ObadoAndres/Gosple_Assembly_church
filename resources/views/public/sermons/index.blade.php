@@ -1,5 +1,8 @@
 @extends('layouts.public')
 
+@section('title', 'Sermons | Philadelphia Gospel Assembly')
+@section('meta_description', 'Listen to and read biblical teaching from Philadelphia Gospel Assembly Tanzania.')
+
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
     <div class="text-center mb-12">
@@ -27,7 +30,7 @@
                         @if($sermon->description)
                             <p class="text-sm text-[#1b1b18] line-clamp-3 mb-4">{{ $sermon->description }}</p>
                         @endif
-                        <a href="{{ route('sermons.show', $sermon->slug) }}" class="text-[#D8B04B] hover:text-[#b8943f] font-medium">Read More ?</a>
+                        <a href="{{ route('sermons.show', $sermon->slug) }}" class="text-[#D8B04B] hover:text-[#b8943f] font-medium">Read More &rarr;</a>
                     </div>
                 </div>
             @endforeach
