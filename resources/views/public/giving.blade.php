@@ -20,7 +20,7 @@
             <p class="text-sm text-yellow-700 mb-4">Tithes and offerings information to be added.</p>
             <p class="text-sm text-[#706f6c]">
                 For giving enquiries, please
-                <a href="{{ route('contact') }}" class="text-[#D8B04B] hover:text-[#b8943f] font-medium underline underline-offset-4">contact the church</a>.
+                <a href="{{ route('contact') }}" class="text-[#8a6d1f] hover:text-[#06182D] font-medium underline underline-offset-4 rounded focus:outline-none focus:ring-2 focus:ring-[#06182D] focus:ring-offset-2">contact the church</a>.
             </p>
         </div>
     </div>

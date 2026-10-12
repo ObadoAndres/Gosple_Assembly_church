@@ -6,7 +6,7 @@
 @section('content')
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
     <div class="mb-6">
-        <a href="{{ route('events.index') }}" class="text-[#06182D] hover:text-[#D8B04B]">&larr; Back to Events</a>
+        <a href="{{ route('events.index') }}" class="text-[#06182D] hover:text-[#8a6d1f] font-medium rounded focus:outline-none focus:ring-2 focus:ring-[#06182D] focus:ring-offset-2">&larr; Back to Events</a>
     </div>
 
     <article class="bg-white rounded-lg shadow-sm border border-gray-100 p-6 sm:p-8">

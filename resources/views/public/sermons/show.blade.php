@@ -6,7 +6,7 @@
 @section('content')
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
     <div class="mb-6">
-        <a href="{{ route('sermons.index') }}" class="text-[#06182D] hover:text-[#D8B04B]">&larr; Back to Sermons</a>
+        <a href="{{ route('sermons.index') }}" class="text-[#06182D] hover:text-[#8a6d1f] font-medium rounded focus:outline-none focus:ring-2 focus:ring-[#06182D] focus:ring-offset-2">&larr; Back to Sermons</a>
     </div>
 
     <article class="bg-white rounded-lg shadow-sm border border-gray-100 p-6 sm:p-8">
@@ -38,7 +38,7 @@
                 <div>
                     <h3 class="text-lg font-semibold text-[#06182D] mb-2">Video</h3>
                     <div class="aspect-w-16 aspect-h-9">
-                        <a href="{{ $sermon->video_url }}" target="_blank" rel="noopener noreferrer" class="text-[#D8B04B] hover:text-[#b8943f] underline">{{ $sermon->video_url }}</a>
+                        <a href="{{ $sermon->video_url }}" target="_blank" rel="noopener noreferrer" class="text-[#8a6d1f] hover:text-[#06182D] underline underline-offset-4 rounded focus:outline-none focus:ring-2 focus:ring-[#06182D] focus:ring-offset-2">{{ $sermon->video_url }}</a>
                     </div>
                 </div>
             @endif
@@ -46,7 +46,7 @@
             @if($sermon->audio_url)
                 <div>
                     <h3 class="text-lg font-semibold text-[#06182D] mb-2">Audio</h3>
-                    <a href="{{ $sermon->audio_url }}" target="_blank" rel="noopener noreferrer" class="text-[#D8B04B] hover:text-[#b8943f] underline">{{ $sermon->audio_url }}</a>
+                    <a href="{{ $sermon->audio_url }}" target="_blank" rel="noopener noreferrer" class="text-[#8a6d1f] hover:text-[#06182D] underline underline-offset-4 rounded focus:outline-none focus:ring-2 focus:ring-[#06182D] focus:ring-offset-2">{{ $sermon->audio_url }}</a>
                 </div>
             @endif
         </div>

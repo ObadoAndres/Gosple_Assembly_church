@@ -16,12 +16,12 @@
                 <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
                     <div class="p-6">
                         <h2 class="text-xl font-semibold text-[#06182D] mb-3">
-                            <a href="{{ route('ministries.show', $ministry->slug) }}" class="hover:text-[#D8B04B]">{{ $ministry->name }}</a>
+                            <a href="{{ route('ministries.show', $ministry->slug) }}" class="hover:text-[#8a6d1f]">{{ $ministry->name }}</a>
                         </h2>
                         @if($ministry->description)
                             <p class="text-sm text-[#1b1b18] line-clamp-3 mb-4">{{ $ministry->description }}</p>
                         @endif
-                        <a href="{{ route('ministries.show', $ministry->slug) }}" class="text-[#D8B04B] hover:text-[#b8943f] font-medium">Learn More &rarr;</a>
+                        <a href="{{ route('ministries.show', $ministry->slug) }}" class="text-[#8a6d1f] hover:text-[#06182D] font-medium rounded focus:outline-none focus:ring-2 focus:ring-[#06182D] focus:ring-offset-2">Learn More &rarr;</a>
                     </div>
                 </div>
             @endforeach

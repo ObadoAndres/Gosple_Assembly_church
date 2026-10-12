@@ -10,16 +10,16 @@
         <p class="text-lg text-[#706f6c]">Serving the Body of Christ with humility and faithfulness</p>
     </div>
 
-    <section class="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start mb-14">
+    <section class="grid grid-cols-1 lg:grid-cols-5 gap-8 items-start mb-16">
         <div class="lg:col-span-2">
             <img src="{{ asset('images/Arch%20Bishop%20Prof%20Yohana%20Simon%20Masinga.png') }}"
                  alt="Arch Bishop Prof. Yohana Simon Masinga"
                  class="w-full rounded-lg shadow-sm border border-gray-100 object-cover"
-                 loading="lazy">
+                 width="455" height="576" loading="lazy">
         </div>
         <div class="lg:col-span-3">
             <h2 class="text-2xl font-semibold text-[#06182D]">Arch Bishop Prof. Yohana Simon Masinga</h2>
-            <p class="text-[#D8B04B] font-medium mb-4">Founder &amp; Senior Leader</p>
+            <p class="text-[#8a6d1f] font-medium mb-4">Founder &amp; Senior Leader</p>
             <div class="space-y-4 text-base text-[#1b1b18] leading-relaxed">
                 <p>
                     Arch Bishop Prof. Yohana Simon Masinga is the founder and senior leader of
@@ -53,7 +53,7 @@
             <img src="{{ asset('images/Prof.%20Bishop%20Yohana%20Masinga%20with%20his%20wife%20Pastor%20Grace%20Masinga.png') }}"
                  alt="Arch Bishop Prof. Yohana Masinga with his wife, Pastor Grace Masinga"
                  class="w-full rounded-lg shadow-sm border border-gray-100 object-cover"
-                 loading="lazy">
+                 width="992" height="811" loading="lazy">
         </div>
     </section>
 
@@ -63,7 +63,7 @@
                 <img src="{{ asset('images/Leadership%20philosophy.png') }}"
                      alt="Church leadership"
                      class="w-full h-full object-cover"
-                     loading="lazy">
+                     width="793" height="564" loading="lazy">
             </div>
             <div class="lg:col-span-3 p-6 sm:p-8 text-white">
                 <h2 class="text-2xl font-semibold mb-4">Our Leadership Philosophy</h2>

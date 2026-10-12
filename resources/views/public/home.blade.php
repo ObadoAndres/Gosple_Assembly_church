@@ -84,7 +84,7 @@
                 @foreach($upcomingEvents as $event)
                     <div class="bg-white rounded-lg shadow-sm border border-gray-100 p-6 hover:shadow-md transition-shadow">
                         <h3 class="text-lg font-semibold text-[#06182D] mb-2">
-                            <a href="{{ route('events.show', $event->slug) }}" class="hover:text-[#D8B04B]">{{ $event->title }}</a>
+                            <a href="{{ route('events.show', $event->slug) }}" class="hover:text-[#8a6d1f]">{{ $event->title }}</a>
                         </h3>
                         <p class="text-[#706f6c] mb-2">{{ $event->starts_at->format('M d, Y g:i A') }}</p>
                         @if($event->description)

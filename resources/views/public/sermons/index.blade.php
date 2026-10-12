@@ -16,7 +16,7 @@
                 <div class="bg-white rounded-lg shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">
                     <div class="p-6">
                         <h2 class="text-xl font-semibold text-[#06182D] mb-2">
-                            <a href="{{ route('sermons.show', $sermon->slug) }}" class="hover:text-[#D8B04B]">{{ $sermon->title }}</a>
+                            <a href="{{ route('sermons.show', $sermon->slug) }}" class="hover:text-[#8a6d1f]">{{ $sermon->title }}</a>
                         </h2>
                         @if($sermon->scripture_reference)
                             <p class="text-sm text-[#706f6c] mb-2">{{ $sermon->scripture_reference }}</p>
@@ -30,7 +30,7 @@
                         @if($sermon->description)
                             <p class="text-sm text-[#1b1b18] line-clamp-3 mb-4">{{ $sermon->description }}</p>
                         @endif
-                        <a href="{{ route('sermons.show', $sermon->slug) }}" class="text-[#D8B04B] hover:text-[#b8943f] font-medium">Read More &rarr;</a>
+                        <a href="{{ route('sermons.show', $sermon->slug) }}" class="text-[#8a6d1f] hover:text-[#06182D] font-medium rounded focus:outline-none focus:ring-2 focus:ring-[#06182D] focus:ring-offset-2">Read More &rarr;</a>
                     </div>
                 </div>
             @endforeach

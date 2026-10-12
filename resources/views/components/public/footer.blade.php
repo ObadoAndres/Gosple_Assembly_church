@@ -10,7 +10,7 @@
                 <p class="text-sm text-gray-300">Motto: <em>Philadelphia tunasonga mbele, Bwana yu pamoja nasi.</em></p>
             </div>
             <div>
-                <h4 class="text-md font-semibold mb-4">Quick Links</h4>
+                <h4 class="text-base font-semibold mb-4">Quick Links</h4>
                 <ul class="space-y-2">
                     <li><a href="{{ route('home') }}" class="text-sm text-gray-300 hover:text-[#D8B04B] transition-colors">Home</a></li>
                     <li><a href="{{ route('about') }}" class="text-sm text-gray-300 hover:text-[#D8B04B] transition-colors">About</a></li>
@@ -23,13 +23,13 @@
                 </ul>
             </div>
             <div id="contact">
-                <h4 class="text-md font-semibold mb-4">Contact & Location</h4>
+                <h4 class="text-base font-semibold mb-4">Contact &amp; Location</h4>
                 <p class="text-sm text-gray-300 mb-2">Dodoma, Tanzania</p>
                 <p class="text-sm text-gray-300 mb-2">Location: RQV2+7QX, Dodoma</p>
                 <p class="text-sm text-gray-300 mb-4">Phone: TBD <span class="text-xs text-yellow-300">(to be confirmed)</span></p>
                 <p class="text-sm text-gray-300 mb-4">Email: TBD <span class="text-xs text-yellow-300">(to be confirmed)</span></p>
                 <p class="text-sm text-gray-300 mb-2"><strong>Sunday Worship</strong></p>
-                <p class="text-sm text-gray-300 text-xs text-yellow-300 mb-2">Note: Conflicting times in docs - 9:00 AM-12:00 PM vs 8:00 AM-5:00 PM (needs confirmation)</p>
+                <p class="text-xs text-yellow-300 mb-2">Note: Conflicting times in docs - 9:00&nbsp;AM&ndash;12:00&nbsp;PM vs 8:00&nbsp;AM&ndash;5:00&nbsp;PM (needs confirmation)</p>
             </div>
         </div>
         <div class="mt-8 pt-8 border-t border-[#1A1A1F]">
