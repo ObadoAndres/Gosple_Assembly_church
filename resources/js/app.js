@@ -3,7 +3,116 @@ import './bootstrap';
 (function () {
     'use strict';
 
+    /* ---------------- Google Translate: protect proper nouns ---------------- */
+    const protectedPhrases = [
+        'Philadelphia Full Gospel Assembly',
+        'Philadelphia Gospel Assembly',
+        'Philadelphia Bible College',
+        'Arch Bishop Prof. Yohana Simon Masinga',
+        'Arch Bishop Prof. Yohana Masinga',
+        'Prof. Yohana Simon Masinga',
+        'Prof. Yohana Masinga',
+        'Yohana Simon Masinga',
+        'Pastor Grace Masinga',
+        'Yohana Masinga',
+        'Grace Masinga',
+        'Philadelphia',
+        'RQV2+7QX',
+    ].sort((a, b) => b.length - a.length);
+
+    const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+    const protectPhrasePattern = new RegExp(
+        '(' + protectedPhrases.map(escapeRegExp).join('|') + ')',
+        'g'
+    );
+
+    const isProtectedNode = (node) => {
+        let el = node.parentElement;
+        while (el) {
+            const tag = el.tagName;
+            if (
+                tag === 'SCRIPT' ||
+                tag === 'STYLE' ||
+                tag === 'NOSCRIPT' ||
+                tag === 'TEXTAREA' ||
+                tag === 'SELECT' ||
+                tag === 'OPTION' ||
+                tag === 'SVG'
+            ) {
+                return true;
+            }
+            if (
+                (el.classList && el.classList.contains('notranslate')) ||
+                el.id === 'google_translate_element'
+            ) {
+                return true;
+            }
+            el = el.parentElement;
+        }
+        return false;
+    };
+
+    const protectProperNouns = () => {
+        if (!document.body) return;
+        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+        const textNodes = [];
+        while (walker.nextNode()) textNodes.push(walker.currentNode);
+
+        textNodes.forEach((node) => {
+            const text = node.nodeValue;
+            if (!text || !protectPhrasePattern.test(text) || isProtectedNode(node)) return;
+
+            protectPhrasePattern.lastIndex = 0;
+            const fragment = document.createDocumentFragment();
+            let lastIndex = 0;
+            let match;
+            while ((match = protectPhrasePattern.exec(text)) !== null) {
+                if (match.index > lastIndex) {
+                    fragment.appendChild(document.createTextNode(text.slice(lastIndex, match.index)));
+                }
+                const span = document.createElement('span');
+                span.className = 'notranslate';
+                span.setAttribute('translate', 'no');
+                span.textContent = match[0];
+                fragment.appendChild(span);
+                lastIndex = match.index + match[0].length;
+            }
+            if (lastIndex < text.length) {
+                fragment.appendChild(document.createTextNode(text.slice(lastIndex)));
+            }
+            node.parentNode.replaceChild(fragment, node);
+        });
+    };
+
+    /* ---------------- Google Translate: remove injected banner/popups ---------------- */
+    const cleanupTranslateChrome = () => {
+        if (!document.body) return;
+        document.documentElement.style.setProperty('margin-top', '0px', 'important');
+        document.body.style.setProperty('top', '0px', 'important');
+        document.body.style.setProperty('position', 'static', 'important');
+        document.body.classList.remove('translated-ltr', 'translated-rtl');
+        document
+            .querySelectorAll(
+                '.goog-te-banner-frame, iframe.skiptranslate, #goog-gt-tt, .goog-te-balloon-frame'
+            )
+            .forEach((el) => {
+                el.style.setProperty('display', 'none', 'important');
+                el.style.setProperty('visibility', 'hidden', 'important');
+            });
+    };
+
     const init = () => {
+        protectProperNouns();
+        cleanupTranslateChrome();
+        window.addEventListener('load', cleanupTranslateChrome);
+        if ('MutationObserver' in window) {
+            new MutationObserver(cleanupTranslateChrome).observe(document.documentElement, {
+                childList: true,
+                subtree: true,
+            });
+        }
+
         /* ---------------- Sidebar (off-canvas premium nav) ---------------- */
         const sidebar = document.getElementById('site-sidebar');
         const overlay = document.getElementById('sidebar-overlay');

@@ -91,7 +91,7 @@
                         <img src="{{ asset('images/logo.png') }}" alt="Philadelphia Gospel Assembly logo"
                              class="h-11 w-11 object-contain" width="360" height="360">
                     </span>
-                    <span class="leading-tight">
+                    <span class="notranslate leading-tight" translate="no">
                         <span class="block font-display text-lg font-semibold">Philadelphia Gospel Assembly</span>
                         <span class="text-[0.68rem] font-semibold uppercase tracking-[0.24em] text-pga-gold-soft">
                             Dodoma &middot; Tanzania
@@ -159,9 +159,26 @@
                 <a href="{{ route('services') }}#weekly-timetable" class="footer-link mt-5">
                     Full weekly timetable &rarr;
                 </a>
+
+                {{-- Map with directions --}}
+                <div class="mt-7 overflow-hidden rounded-2xl border border-white/12 bg-white/5">
+                    <iframe
+                        title="Map showing Philadelphia Gospel Assembly, Dodoma"
+                        src="https://www.google.com/maps?q=RQV2%2B7QX%20Dodoma%20Tanzania&amp;z=15&amp;output=embed"
+                        class="h-40 w-full grayscale-[35%] transition-all duration-700 hover:grayscale-0"
+                        loading="lazy" referrerpolicy="no-referrer-when-downgrade" style="border:0;"></iframe>
+                    <a href="https://www.google.com/maps/search/?api=1&amp;query=RQV2%2B7QX%2C%20Dodoma%2C%20Tanzania"
+                       target="_blank" rel="noopener noreferrer"
+                       class="flex items-center justify-center gap-2 bg-pga-green/80 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-pga-red">
+                        <svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m9 6.75 6 3 6-3v10.5l-6 3-6-3-6 3V9.75l6-3Zm0 0v10.5m6-7.5v10.5" />
+                        </svg>
+                        Open directions in Maps
+                    </a>
+                </div>
             </div>
 
-            {{-- Contact + map --}}
+            {{-- Contact --}}
             <div class="reveal reveal-delay-3 lg:col-span-3">
                 <h3 class="font-display text-base font-semibold text-white">Get in Touch</h3>
                 <div class="mt-2 h-px w-10 bg-pga-gold/60"></div>
@@ -178,27 +195,10 @@
                             </span>
                             <span class="min-w-0">
                                 <span class="block text-[0.66rem] font-bold uppercase tracking-[0.18em] text-white/45">{{ $chip['label'] }}</span>
-                                <span class="block truncate text-sm text-white/85">{{ $chip['value'] }}</span>
+                                <span class="notranslate block truncate text-sm text-white/85" translate="no">{{ $chip['value'] }}</span>
                             </span>
                         </a>
                     @endforeach
-                </div>
-
-                {{-- Map with directions --}}
-                <div class="mt-5 overflow-hidden rounded-2xl border border-white/12 bg-white/5">
-                    <iframe
-                        title="Map showing Philadelphia Gospel Assembly, Dodoma"
-                        src="https://www.google.com/maps?q=RQV2%2B7QX%20Dodoma%20Tanzania&amp;z=15&amp;output=embed"
-                        class="h-40 w-full grayscale-[35%] transition-all duration-700 hover:grayscale-0"
-                        loading="lazy" referrerpolicy="no-referrer-when-downgrade" style="border:0;"></iframe>
-                    <a href="https://www.google.com/maps/search/?api=1&amp;query=RQV2%2B7QX%2C%20Dodoma%2C%20Tanzania"
-                       target="_blank" rel="noopener noreferrer"
-                       class="flex items-center justify-center gap-2 bg-pga-green/80 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-pga-red">
-                        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m9 6.75 6 3 6-3v10.5l-6 3-6-3-6 3V9.75l6-3Zm0 0v10.5m6-7.5v10.5" />
-                        </svg>
-                        Open directions in Maps
-                    </a>
                 </div>
             </div>
         </div>
@@ -206,7 +206,7 @@
         {{-- Bottom bar --}}
         <div class="mt-12 flex flex-col items-center gap-4 border-t border-white/10 pt-6 text-center sm:flex-row sm:justify-between sm:text-left">
             <p class="text-xs text-white/55">
-                &copy; {{ $year }} Philadelphia Gospel Assembly Tanzania. All rights reserved.
+                &copy; {{ $year }} <span class="notranslate" translate="no">Philadelphia Gospel Assembly Tanzania</span>. All rights reserved.
             </p>
             <div class="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs">
                 <span class="text-white/40">Founded 1992 &middot; Registered in Tanzania</span>

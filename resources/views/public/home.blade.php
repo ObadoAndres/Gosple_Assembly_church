@@ -361,7 +361,7 @@
                 </div>
             @else
                 <div class="reveal clay mx-auto mt-12 max-w-3xl p-8 text-center">
-                    <p class="text-pga-muted">No sermons have been published yet. Please check back for messages from the church.</p>
+                    <p class="text-pga-muted">Watch worship services, prayer gatherings, and special meetings from our church on YouTube.</p>
                 </div>
             @endif
 
@@ -396,4 +396,3 @@
         </div>
     </section>
 @endsection
-

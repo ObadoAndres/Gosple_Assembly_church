@@ -101,6 +101,9 @@ class PublicPagesTest extends TestCase
         $response->assertSee('Women&#039;s Ministry', false);
         $response->assertSee('Men&#039;s Ministry', false);
         $response->assertDontSee('Youth Ministry', false);
+        $response->assertSee('Watch worship services, prayer gatherings, and special meetings from our church on YouTube.', false);
+        $response->assertDontSee('No sermons have been published yet', false);
+        $response->assertSee(route('sermons.index'), false);
         $response->assertSee('Give &amp; Make a Difference', false);
         $response->assertDontSee('8:00 AM - 5:00 PM', false);
         $response->assertDontSee('9:00 AM - 12:00 PM', false);
@@ -231,6 +234,12 @@ class PublicPagesTest extends TestCase
         $response->assertSee('+255 757 452 410', false);
         $response->assertSee('+255 784 993 496', false);
         $response->assertSee('+255 784 925 922', false);
+        $response->assertSee('id="language-switch"', false);
+        $response->assertSee('data-target-language="sw"', false);
+        $response->assertSee('Kiswahili', false);
+        $response->assertSee('English', false);
+        $response->assertSee('id="google_translate_element"', false);
+        $response->assertSee("includedLanguages: 'en,sw'", false);
         $response->assertDontSee('A church phone number and email address have not yet been confirmed', false);
     }
 

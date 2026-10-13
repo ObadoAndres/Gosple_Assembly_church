@@ -24,7 +24,7 @@
                     <img src="{{ asset('images/logo.png') }}" alt="Philadelphia Gospel Assembly logo"
                          class="h-8 w-8 object-contain" width="360" height="360">
                 </span>
-                <span class="leading-tight">
+                <span class="notranslate leading-tight" translate="no">
                     <span class="block font-display text-base font-semibold text-white">Philadelphia</span>
                     <span class="block text-[0.65rem] font-semibold uppercase tracking-[0.24em] text-pga-gold-soft">
                         Gospel Assembly
@@ -64,7 +64,7 @@
             {{-- Quick contact --}}
             <div class="mt-7 rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur">
                 <p class="mb-3 text-[0.66rem] font-bold uppercase tracking-[0.28em] text-pga-gold-soft">Visit Us</p>
-                <p class="text-sm leading-relaxed text-white/75">
+                <p class="notranslate text-sm leading-relaxed text-white/75" translate="no">
                     RQV2+7QX, Dodoma, Tanzania
                 </p>
                 <a href="https://www.google.com/maps/search/?api=1&amp;query=RQV2%2B7QX%2C%20Dodoma%2C%20Tanzania"

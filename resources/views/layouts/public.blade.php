@@ -70,5 +70,60 @@
     </main>
 
     @include('components.public.footer')
+
+    <script>
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,sw',
+                autoDisplay: false
+            }, 'google_translate_element');
+
+            const button = document.getElementById('language-switch');
+            const container = document.getElementById('google_translate_element');
+
+            const syncLanguageButton = () => {
+                const select = container.querySelector('.goog-te-combo');
+
+                if (!select || !Array.from(select.options).some((option) => option.value === 'sw')) {
+                    return false;
+                }
+
+                const targetLanguage = select.value === 'sw' ? 'en' : 'sw';
+                const languageName = targetLanguage === 'sw' ? 'Kiswahili' : 'English';
+
+                button.dataset.targetLanguage = targetLanguage;
+                button.querySelector('[data-language-code]').textContent = targetLanguage.toUpperCase();
+                button.querySelector('[data-language-label]').textContent = languageName;
+                button.setAttribute('aria-label', `Translate this website to ${languageName}`);
+                button.disabled = false;
+
+                return true;
+            };
+
+            const observer = new MutationObserver(() => {
+                if (syncLanguageButton()) {
+                    observer.disconnect();
+                }
+            });
+
+            observer.observe(container, { childList: true, subtree: true });
+            syncLanguageButton();
+
+            button.addEventListener('click', () => {
+                const select = container.querySelector('.goog-te-combo');
+
+                if (!select) {
+                    button.disabled = true;
+                    return;
+                }
+
+                select.value = button.dataset.targetLanguage;
+                select.dispatchEvent(new Event('change', { bubbles: true }));
+                syncLanguageButton();
+            });
+        }
+    </script>
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async defer></script>
 </body>
 </html>
