@@ -34,6 +34,6 @@ class AdminAccessTest extends TestCase
 
         $response = $this->actingAs($user)->get('/admin/dashboard');
         $response->assertOk();
-        $response->assertSee('Admin Dashboard');
+        $response->assertSee('Welcome back');
     }
 }

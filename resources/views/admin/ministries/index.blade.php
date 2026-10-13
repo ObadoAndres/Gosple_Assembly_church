@@ -1,100 +1,115 @@
 @extends('layouts.admin')
 
+@section('title', 'Ministries')
+@section('page-title', 'Ministries')
+
 @section('content')
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-bold text-[#06182D]">Ministries</h1>
-        <a href="{{ route('admin.ministries.create') }}" class="inline-flex items-center px-4 py-2 bg-[#D8B04B] text-[#06182D] rounded-md hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-[#D8B04B] transition-colors">Create Ministry</a>
+<div class="flex flex-wrap items-end justify-between gap-4">
+    <div>
+        <h1 class="font-display text-2xl font-semibold text-pga-ink">Ministries</h1>
+        <p class="mt-1 text-sm text-pga-muted">Organise the departments and fellowships of the church.</p>
     </div>
+    <a href="{{ route('admin.ministries.create') }}" class="btn btn-primary btn-sm">
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+        </svg>
+        Create Ministry
+    </a>
+</div>
 
-    @if (session('success'))
-        <div class="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
-            {{ session('success') }}
-        </div>
-    @endif
-
-    <div class="bg-white shadow rounded-lg p-6 mb-6">
-        <form method="GET" action="{{ route('admin.ministries.index') }}" class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-                <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Search</label>
-                <input type="text" name="search" id="search" value="{{ request('search') }}" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#06182D]" placeholder="Name">
-            </div>
-            <div>
-                <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                <select name="status" id="status" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#06182D]">
-                    <option value="">All</option>
-                    <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Active</option>
-                    <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Inactive</option>
-                </select>
-            </div>
-            <div class="flex items-end">
-                <button type="submit" class="px-4 py-2 bg-[#06182D] text-white rounded-md hover:bg-[#1A1A1F] focus:outline-none focus:ring-2 focus:ring-[#06182D]">Filter</button>
-                <a href="{{ route('admin.ministries.index') }}" class="ml-2 px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 focus:outline-none">Clear</a>
-            </div>
-        </form>
+@if (session('success'))
+    <div class="mt-6 flex items-start gap-3 rounded-2xl border border-pga-green/25 bg-pga-green/8 px-4 py-3 text-sm text-pga-green-deep">
+        <svg class="mt-0.5 h-5 w-5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        </svg>
+        <span>{{ session('success') }}</span>
     </div>
+@endif
 
-    <div class="bg-white shadow rounded-lg overflow-hidden">
-        <div class="px-6 py-4 border-b border-gray-200">
-            <h2 class="text-lg font-medium text-gray-900">Ministry List</h2>
+<div class="admin-card mt-6 p-5">
+    <form method="GET" action="{{ route('admin.ministries.index') }}" class="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div>
+            <label for="search" class="admin-label">Search</label>
+            <input type="text" name="search" id="search" value="{{ request('search') }}" class="field" placeholder="Name">
         </div>
-        @if($ministries->count() > 0)
-            <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
+        <div>
+            <label for="status" class="admin-label">Status</label>
+            <select name="status" id="status" class="field">
+                <option value="">All</option>
+                <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Active</option>
+                <option value="inactive" {{ request('status') == 'inactive' ? 'selected' : '' }}>Inactive</option>
+            </select>
+        </div>
+        <div class="flex items-end gap-3">
+            <button type="submit" class="btn btn-primary btn-sm">Filter</button>
+            <a href="{{ route('admin.ministries.index') }}" class="btn btn-outline btn-sm">Clear</a>
+        </div>
+    </form>
+</div>
+
+<div class="admin-card mt-6 overflow-hidden">
+    @if ($ministries->count() > 0)
+        <div class="overflow-x-auto">
+            <table class="admin-table min-w-full">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Sort Order</th>
+                        <th>Status</th>
+                        <th class="text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($ministries as $ministry)
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sort Order</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                            <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        @foreach($ministries as $ministry)
-                            <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $ministry->name }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $ministry->sort_order }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    @if($ministry->is_active)
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
-                                    @else
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">Inactive</span>
-                                    @endif
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
-                                    <a href="{{ route('admin.ministries.show', $ministry) }}" class="text-indigo-600 hover:text-indigo-900">View</a>
-                                    <a href="{{ route('admin.ministries.edit', $ministry) }}" class="text-yellow-600 hover:text-yellow-900">Edit</a>
-                                    @if($ministry->is_active)
-                                        <form method="POST" action="{{ route('admin.ministries.deactivate', $ministry) }}" class="inline" onsubmit="return confirm('Deactivate this ministry?');">
+                            <td class="font-semibold text-pga-ink">{{ $ministry->name }}</td>
+                            <td class="text-pga-muted">{{ $ministry->sort_order }}</td>
+                            <td>
+                                <span class="badge {{ $ministry->is_active ? 'badge-green' : 'badge-gray' }}">
+                                    {{ $ministry->is_active ? 'Active' : 'Inactive' }}
+                                </span>
+                            </td>
+                            <td>
+                                <div class="flex flex-wrap items-center justify-end gap-x-4 gap-y-2">
+                                    <a href="{{ route('admin.ministries.show', $ministry) }}" class="admin-action">View</a>
+                                    <a href="{{ route('admin.ministries.edit', $ministry) }}" class="admin-action admin-action--warn">Edit</a>
+                                    @if ($ministry->is_active)
+                                        <form method="POST" action="{{ route('admin.ministries.deactivate', $ministry) }}" onsubmit="return confirm('Deactivate this ministry?');">
                                             @csrf
-                                            <button type="submit" class="text-orange-600 hover:text-orange-900">Deactivate</button>
+                                            <button type="submit" class="admin-action admin-action--warn">Deactivate</button>
                                         </form>
                                     @else
-                                        <form method="POST" action="{{ route('admin.ministries.activate', $ministry) }}" class="inline" onsubmit="return confirm('Activate this ministry?');">
+                                        <form method="POST" action="{{ route('admin.ministries.activate', $ministry) }}" onsubmit="return confirm('Activate this ministry?');">
                                             @csrf
-                                            <button type="submit" class="text-green-600 hover:text-green-900">Activate</button>
+                                            <button type="submit" class="admin-action">Activate</button>
                                         </form>
                                     @endif
-                                    <form method="POST" action="{{ route('admin.ministries.destroy', $ministry) }}" class="inline" onsubmit="return confirm('Are you sure you want to delete this ministry?');">
+                                    <form method="POST" action="{{ route('admin.ministries.destroy', $ministry) }}" onsubmit="return confirm('Are you sure you want to delete this ministry?');">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>
+                                        <button type="submit" class="admin-action admin-action--danger">Delete</button>
                                     </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-            <div class="px-6 py-4 border-t border-gray-200">
-                {{ $ministries->links() }}
-            </div>
-        @else
-            <div class="px-6 py-8 text-center text-gray-500">
-                <p>No ministries found.</p>
-                <a href="{{ route('admin.ministries.create') }}" class="mt-2 inline-block text-[#06182D] hover:text-[#D8B04B]">Create your first ministry</a>
-            </div>
-        @endif
-    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        <div class="border-t border-pga-ink/8 px-6 py-4">
+            {{ $ministries->links() }}
+        </div>
+    @else
+        <div class="px-6 py-16 text-center">
+            <span class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-pga-green/10 text-pga-green">
+                <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72M18 18.72a3 3 0 0 0 .513-5.962M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM6 18.72a9.094 9.094 0 0 1-3.741-.479 3 3 0 0 1 4.682-2.72M6 18.72a9.094 9.094 0 0 0 3.741-.479" />
+                </svg>
+            </span>
+            <p class="mt-4 font-display text-lg font-semibold text-pga-ink">No ministries found</p>
+            <p class="mt-1 text-sm text-pga-muted">Add the fellowships and departments of the church.</p>
+            <a href="{{ route('admin.ministries.create') }}" class="btn btn-primary btn-sm mt-5">Create your first ministry</a>
+        </div>
+    @endif
 </div>
 @endsection

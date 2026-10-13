@@ -1,69 +1,85 @@
 @extends('layouts.admin')
 
+@section('title', 'Create Event')
+@section('page-title', 'Create Event')
+
 @section('content')
-<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-bold text-[#06182D]">Create Event</h1>
-        <a href="{{ route('admin.events.index') }}" class="text-[#06182D] hover:text-[#D8B04B]">? Back to List</a>
+<div class="flex flex-wrap items-center justify-between gap-4">
+    <div>
+        <h1 class="font-display text-2xl font-semibold text-pga-ink">Create Event</h1>
+        <p class="mt-1 text-sm text-pga-muted">Add a new service or gathering to the calendar.</p>
     </div>
+    <a href="{{ route('admin.events.index') }}" class="btn btn-outline btn-sm">
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+        </svg>
+        Back to List
+    </a>
+</div>
 
-    @if ($errors->any())
-        <div class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
-            <ul class="list-disc list-inside">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+@if ($errors->any())
+    <div class="mt-6 rounded-2xl border border-pga-red/25 bg-pga-red/8 px-4 py-3 text-sm text-pga-red-deep">
+        <p class="font-semibold">Please fix the following:</p>
+        <ul class="mt-1 list-inside list-disc space-y-0.5">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+<div class="admin-card mt-6 p-6 sm:p-8">
+    <form method="POST" action="{{ route('admin.events.store') }}">
+        @csrf
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+            <div class="md:col-span-2">
+                <label for="title" class="admin-label">Title <span class="text-pga-red">*</span></label>
+                <input type="text" name="title" id="title" value="{{ old('title') }}" class="field" required>
+                @error('title')<p class="mt-1 text-sm text-pga-red-deep">{{ $message }}</p>@enderror
+            </div>
+
+            <div class="md:col-span-2">
+                <label for="slug" class="admin-label">Slug (optional)</label>
+                <input type="text" name="slug" id="slug" value="{{ old('slug') }}" class="field" placeholder="Leave blank to auto-generate">
+                @error('slug')<p class="mt-1 text-sm text-pga-red-deep">{{ $message }}</p>@enderror
+            </div>
+
+            <div>
+                <label for="starts_at" class="admin-label">Starts At <span class="text-pga-red">*</span></label>
+                <input type="datetime-local" name="starts_at" id="starts_at" value="{{ old('starts_at') }}" class="field" required>
+                @error('starts_at')<p class="mt-1 text-sm text-pga-red-deep">{{ $message }}</p>@enderror
+            </div>
+
+            <div>
+                <label for="ends_at" class="admin-label">Ends At (optional)</label>
+                <input type="datetime-local" name="ends_at" id="ends_at" value="{{ old('ends_at') }}" class="field">
+                @error('ends_at')<p class="mt-1 text-sm text-pga-red-deep">{{ $message }}</p>@enderror
+            </div>
+
+            <div class="md:col-span-2">
+                <label for="location" class="admin-label">Location</label>
+                <input type="text" name="location" id="location" value="{{ old('location') }}" class="field">
+                @error('location')<p class="mt-1 text-sm text-pga-red-deep">{{ $message }}</p>@enderror
+            </div>
+
+            <div class="md:col-span-2">
+                <label for="description" class="admin-label">Description</label>
+                <textarea name="description" id="description" rows="4" class="field">{{ old('description') }}</textarea>
+                @error('description')<p class="mt-1 text-sm text-pga-red-deep">{{ $message }}</p>@enderror
+            </div>
+
+            <div class="md:col-span-2">
+                <label class="flex items-center gap-3 rounded-xl border border-pga-ink/10 bg-white/60 px-4 py-3">
+                    <input type="checkbox" name="is_published" value="1" class="admin-check" {{ old('is_published') ? 'checked' : '' }}>
+                    <span class="text-sm font-medium text-pga-ink">Publish immediately</span>
+                </label>
+            </div>
         </div>
-    @endif
 
-    <div class="bg-white shadow rounded-lg p-6">
-        <form method="POST" action="{{ route('admin.events.store') }}">
-            @csrf
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="md:col-span-2">
-                    <label for="title" class="block text-sm font-medium text-gray-700 mb-1">Title <span class="text-red-500">*</span></label>
-                    <input type="text" name="title" id="title" value="{{ old('title') }}" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#06182D]" required>
-                </div>
-
-                <div class="md:col-span-2">
-                    <label for="slug" class="block text-sm font-medium text-gray-700 mb-1">Slug (optional)</label>
-                    <input type="text" name="slug" id="slug" value="{{ old('slug') }}" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#06182D]" placeholder="Leave blank to auto-generate">
-                </div>
-
-                <div>
-                    <label for="starts_at" class="block text-sm font-medium text-gray-700 mb-1">Starts At <span class="text-red-500">*</span></label>
-                    <input type="datetime-local" name="starts_at" id="starts_at" value="{{ old('starts_at') }}" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#06182D]" required>
-                </div>
-
-                <div>
-                    <label for="ends_at" class="block text-sm font-medium text-gray-700 mb-1">Ends At (optional)</label>
-                    <input type="datetime-local" name="ends_at" id="ends_at" value="{{ old('ends_at') }}" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#06182D]">
-                </div>
-
-                <div class="md:col-span-2">
-                    <label for="location" class="block text-sm font-medium text-gray-700 mb-1">Location</label>
-                    <input type="text" name="location" id="location" value="{{ old('location') }}" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#06182D]">
-                </div>
-
-                <div class="md:col-span-2">
-                    <label for="description" class="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                    <textarea name="description" id="description" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#06182D]">{{ old('description') }}</textarea>
-                </div>
-
-                <div class="md:col-span-2">
-                    <label class="flex items-center">
-                        <input type="checkbox" name="is_published" value="1" class="rounded border-gray-300 text-[#06182D] focus:ring-[#06182D]" {{ old('is_published') ? 'checked' : '' }}>
-                        <span class="ml-2 text-sm text-gray-700">Publish immediately</span>
-                    </label>
-                </div>
-            </div>
-
-            <div class="mt-6 flex justify-end space-x-4">
-                <a href="{{ route('admin.events.index') }}" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 focus:outline-none">Cancel</a>
-                <button type="submit" class="px-4 py-2 bg-[#D8B04B] text-[#06182D] rounded-md hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-[#D8B04B]">Create Event</button>
-            </div>
-        </form>
-    </div>
+        <div class="mt-8 flex flex-wrap justify-end gap-3 border-t border-pga-ink/8 pt-6">
+            <a href="{{ route('admin.events.index') }}" class="btn btn-outline btn-sm">Cancel</a>
+            <button type="submit" class="btn btn-primary btn-sm">Create Event</button>
+        </div>
+    </form>
 </div>
 @endsection

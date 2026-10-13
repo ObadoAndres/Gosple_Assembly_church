@@ -1,73 +1,89 @@
 @extends('layouts.admin')
 
+@section('title', 'Sermon Details')
+@section('page-title', 'Sermon Details')
+
 @section('content')
-<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-bold text-[#06182D]">Sermon Details</h1>
-        <div class="space-x-4">
-            <a href="{{ route('admin.sermons.edit', $sermon) }}" class="px-4 py-2 bg-[#D8B04B] text-[#06182D] rounded-md hover:bg-yellow-400">Edit</a>
-            <a href="{{ route('admin.sermons.index') }}" class="text-[#06182D] hover:text-[#D8B04B]">? Back to List</a>
+<div class="flex flex-wrap items-center justify-between gap-4">
+    <div>
+        <h1 class="font-display text-2xl font-semibold text-pga-ink">Sermon Details</h1>
+        <p class="mt-1 text-sm text-pga-muted">Full record for this message.</p>
+    </div>
+    <div class="flex flex-wrap gap-3">
+        <a href="{{ route('admin.sermons.edit', $sermon) }}" class="btn btn-accent btn-sm">Edit</a>
+        <a href="{{ route('admin.sermons.index') }}" class="btn btn-outline btn-sm">Back to List</a>
+    </div>
+</div>
+
+@if (session('success'))
+    <div class="mt-6 flex items-start gap-3 rounded-2xl border border-pga-green/25 bg-pga-green/8 px-4 py-3 text-sm text-pga-green-deep">
+        <svg class="mt-0.5 h-5 w-5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        </svg>
+        <span>{{ session('success') }}</span>
+    </div>
+@endif
+
+<div class="admin-card mt-6 overflow-hidden">
+    <div class="flex flex-wrap items-start justify-between gap-4 border-b border-pga-ink/8 px-6 py-5">
+        <div>
+            <h2 class="font-display text-xl font-semibold text-pga-ink">{{ $sermon->title }}</h2>
+            <p class="mt-1 text-sm text-pga-muted">Slug: <span class="font-medium text-pga-ink">{{ $sermon->slug }}</span></p>
         </div>
+        <span class="badge {{ $sermon->is_published ? 'badge-green' : 'badge-gray' }}">
+            {{ $sermon->is_published ? 'Published' : 'Unpublished' }}
+        </span>
     </div>
 
-    @if (session('success'))
-        <div class="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
-            {{ session('success') }}
+    <dl class="grid grid-cols-1 gap-px bg-pga-ink/8 md:grid-cols-2">
+        <div class="bg-white/70 px-6 py-5">
+            <dt class="admin-label">Preacher</dt>
+            <dd class="text-sm text-pga-ink">{{ $sermon->preacher ?? '-' }}</dd>
         </div>
-    @endif
-
-    <div class="bg-white shadow rounded-lg p-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="md:col-span-2">
-                <h2 class="text-xl font-semibold text-gray-900 mb-2">{{ $sermon->title }}</h2>
-                <p class="text-sm text-gray-500">Slug: {{ $sermon->slug }}</p>
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-500">Preacher</label>
-                <p class="mt-1 text-gray-900">{{ $sermon->preacher ?? '-' }}</p>
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-500">Category</label>
-                <p class="mt-1 text-gray-900">{{ $sermon->category ?? '-' }}</p>
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-500">Sermon Date</label>
-                <p class="mt-1 text-gray-900">{{ $sermon->sermon_date ? $sermon->sermon_date->format('Y-m-d') : '-' }}</p>
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-500">Scripture Reference</label>
-                <p class="mt-1 text-gray-900">{{ $sermon->scripture_reference ?? '-' }}</p>
-            </div>
-            <div class="md:col-span-2">
-                <label class="block text-sm font-medium text-gray-500">Video URL</label>
-                <p class="mt-1 text-gray-900 break-all">{{ $sermon->video_url ?? '-' }}</p>
-            </div>
-            <div class="md:col-span-2">
-                <label class="block text-sm font-medium text-gray-500">Audio URL</label>
-                <p class="mt-1 text-gray-900 break-all">{{ $sermon->audio_url ?? '-' }}</p>
-            </div>
-            <div class="md:col-span-2">
-                <label class="block text-sm font-medium text-gray-500">Description</label>
-                <p class="mt-1 text-gray-900 whitespace-pre-wrap">{{ $sermon->description ?? '-' }}</p>
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-500">Status</label>
-                <p class="mt-1">
-                    @if($sermon->is_published)
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Published</span>
-                        @if($sermon->published_at)
-                            <span class="ml-2 text-sm text-gray-500">({{ $sermon->published_at->format('Y-m-d H:i') }})</span>
-                        @endif
-                    @else
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">Unpublished</span>
-                    @endif
-                </p>
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-500">Created At</label>
-                <p class="mt-1 text-gray-900">{{ $sermon->created_at->format('Y-m-d H:i') }}</p>
-            </div>
+        <div class="bg-white/70 px-6 py-5">
+            <dt class="admin-label">Category</dt>
+            <dd class="text-sm text-pga-ink">{{ $sermon->category ?? '-' }}</dd>
         </div>
-    </div>
+        <div class="bg-white/70 px-6 py-5">
+            <dt class="admin-label">Sermon Date</dt>
+            <dd class="text-sm text-pga-ink">{{ $sermon->sermon_date ? $sermon->sermon_date->format('Y-m-d') : '-' }}</dd>
+        </div>
+        <div class="bg-white/70 px-6 py-5">
+            <dt class="admin-label">Scripture Reference</dt>
+            <dd class="text-sm text-pga-ink">{{ $sermon->scripture_reference ?? '-' }}</dd>
+        </div>
+        <div class="bg-white/70 px-6 py-5 md:col-span-2">
+            <dt class="admin-label">Video URL</dt>
+            <dd class="break-all text-sm text-pga-ink">
+                @if ($sermon->video_url)
+                    <a href="{{ $sermon->video_url }}" target="_blank" rel="noopener" class="text-pga-green hover:underline">{{ $sermon->video_url }}</a>
+                @else
+                    -
+                @endif
+            </dd>
+        </div>
+        <div class="bg-white/70 px-6 py-5 md:col-span-2">
+            <dt class="admin-label">Audio URL</dt>
+            <dd class="break-all text-sm text-pga-ink">
+                @if ($sermon->audio_url)
+                    <a href="{{ $sermon->audio_url }}" target="_blank" rel="noopener" class="text-pga-green hover:underline">{{ $sermon->audio_url }}</a>
+                @else
+                    -
+                @endif
+            </dd>
+        </div>
+        <div class="bg-white/70 px-6 py-5 md:col-span-2">
+            <dt class="admin-label">Description</dt>
+            <dd class="whitespace-pre-wrap text-sm text-pga-ink">{{ $sermon->description ?? '-' }}</dd>
+        </div>
+        <div class="bg-white/70 px-6 py-5">
+            <dt class="admin-label">Published At</dt>
+            <dd class="text-sm text-pga-ink">{{ $sermon->published_at ? $sermon->published_at->format('Y-m-d H:i') : '-' }}</dd>
+        </div>
+        <div class="bg-white/70 px-6 py-5">
+            <dt class="admin-label">Created At</dt>
+            <dd class="text-sm text-pga-ink">{{ $sermon->created_at->format('Y-m-d H:i') }}</dd>
+        </div>
+    </dl>
 </div>
 @endsection

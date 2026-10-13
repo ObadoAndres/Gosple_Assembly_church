@@ -229,6 +229,30 @@ class PublicContentVisibilityTest extends TestCase
         $this->get(route('sermons.show', $sermon->slug))->assertOk()->assertSee($sermon->title);
     }
 
+    public function test_sermon_listing_can_be_searched_and_filtered_by_category(): void
+    {
+        $matchingSermon = $this->createSermon([
+            'title' => 'Faithful Living',
+            'scripture_reference' => 'Proverbs 1:7',
+            'preacher' => 'Pastor Example',
+            'category' => 'Discipleship',
+        ]);
+        $otherSermon = $this->createSermon([
+            'title' => 'A Different Message',
+            'category' => 'Prayer',
+        ]);
+
+        $this->get(route('sermons.index', ['search' => 'Proverbs']))
+            ->assertOk()
+            ->assertSee($matchingSermon->title)
+            ->assertDontSee($otherSermon->title);
+
+        $this->get(route('sermons.index', ['category' => 'Prayer']))
+            ->assertOk()
+            ->assertSee($otherSermon->title)
+            ->assertDontSee($matchingSermon->title);
+    }
+
     public function test_sermon_becomes_visible_when_publication_time_arrives(): void
     {
         $publishAt = now()->addHour();

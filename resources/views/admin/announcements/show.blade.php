@@ -1,58 +1,63 @@
 @extends('layouts.admin')
 
+@section('title', 'Announcement Details')
+@section('page-title', 'Announcement Details')
+
 @section('content')
-<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-bold text-[#06182D]">Announcement Details</h1>
-        <div class="space-x-4">
-            <a href="{{ route('admin.announcements.edit', $announcement) }}" class="px-4 py-2 bg-[#D8B04B] text-[#06182D] rounded-md hover:bg-yellow-400">Edit</a>
-            <a href="{{ route('admin.announcements.index') }}" class="text-[#06182D] hover:text-[#D8B04B]">? Back to List</a>
+<div class="flex flex-wrap items-center justify-between gap-4">
+    <div>
+        <h1 class="font-display text-2xl font-semibold text-pga-ink">Announcement Details</h1>
+        <p class="mt-1 text-sm text-pga-muted">Full record for this notice.</p>
+    </div>
+    <div class="flex flex-wrap gap-3">
+        <a href="{{ route('admin.announcements.edit', $announcement) }}" class="btn btn-accent btn-sm">Edit</a>
+        <a href="{{ route('admin.announcements.index') }}" class="btn btn-outline btn-sm">Back to List</a>
+    </div>
+</div>
+
+@if (session('success'))
+    <div class="mt-6 flex items-start gap-3 rounded-2xl border border-pga-green/25 bg-pga-green/8 px-4 py-3 text-sm text-pga-green-deep">
+        <svg class="mt-0.5 h-5 w-5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        </svg>
+        <span>{{ session('success') }}</span>
+    </div>
+@endif
+
+<div class="admin-card mt-6 overflow-hidden">
+    <div class="flex flex-wrap items-start justify-between gap-4 border-b border-pga-ink/8 px-6 py-5">
+        <div>
+            <h2 class="font-display text-xl font-semibold text-pga-ink">{{ $announcement->title }}</h2>
+            <p class="mt-1 text-sm text-pga-muted">Slug: <span class="font-medium text-pga-ink">{{ $announcement->slug }}</span></p>
         </div>
+        @if (!$announcement->is_published)
+            <span class="badge badge-gray">Draft</span>
+        @elseif ($announcement->published_at && $announcement->published_at->gt(now()))
+            <span class="badge badge-yellow">Scheduled</span>
+        @elseif ($announcement->expires_at && $announcement->expires_at->lte(now()))
+            <span class="badge badge-red">Expired</span>
+        @else
+            <span class="badge badge-green">Published</span>
+        @endif
     </div>
 
-    @if (session('success'))
-        <div class="mb-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
-            {{ session('success') }}
+    <dl class="grid grid-cols-1 gap-px bg-pga-ink/8 md:grid-cols-2">
+        <div class="bg-white/70 px-6 py-5">
+            <dt class="admin-label">Published At</dt>
+            <dd class="text-sm text-pga-ink">{{ $announcement->published_at ? $announcement->published_at->format('Y-m-d H:i') : '-' }}</dd>
         </div>
-    @endif
-
-    <div class="bg-white shadow rounded-lg p-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="md:col-span-2">
-                <h2 class="text-xl font-semibold text-gray-900 mb-2">{{ $announcement->title }}</h2>
-                <p class="text-sm text-gray-500">Slug: {{ $announcement->slug }}</p>
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-500">Published At</label>
-                <p class="mt-1 text-gray-900">{{ $announcement->published_at ? $announcement->published_at->format('Y-m-d H:i') : '-' }}</p>
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-500">Expires At</label>
-                <p class="mt-1 text-gray-900">{{ $announcement->expires_at ? $announcement->expires_at->format('Y-m-d H:i') : '-' }}</p>
-            </div>
-            <div class="md:col-span-2">
-                <label class="block text-sm font-medium text-gray-500">Body</label>
-                <p class="mt-1 text-gray-900 whitespace-pre-wrap">{{ $announcement->body }}</p>
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-500">Status</label>
-                <p class="mt-1">
-                    @if(!$announcement->is_published)
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">Draft</span>
-                    @elseif($announcement->expires_at && $announcement->expires_at->lte(now()))
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Expired</span>
-                    @elseif($announcement->published_at && $announcement->published_at->gt(now()))
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Scheduled</span>
-                    @else
-                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Published</span>
-                    @endif
-                </p>
-            </div>
-            <div>
-                <label class="block text-sm font-medium text-gray-500">Created At</label>
-                <p class="mt-1 text-gray-900">{{ $announcement->created_at->format('Y-m-d H:i') }}</p>
-            </div>
+        <div class="bg-white/70 px-6 py-5">
+            <dt class="admin-label">Expires At</dt>
+            <dd class="text-sm text-pga-ink">{{ $announcement->expires_at ? $announcement->expires_at->format('Y-m-d H:i') : '-' }}</dd>
         </div>
-    </div>
+        <div class="bg-white/70 px-6 py-5 md:col-span-2">
+            <dt class="admin-label">Body</dt>
+            <dd class="whitespace-pre-wrap text-sm text-pga-ink">{{ $announcement->body }}</dd>
+        </div>
+        <div class="bg-white/70 px-6 py-5 md:col-span-2">
+            <dt class="admin-label">Created At</dt>
+            <dd class="text-sm text-pga-ink">{{ $announcement->created_at->format('Y-m-d H:i') }}</dd>
+        </div>
+    </dl>
 </div>
 @endsection
